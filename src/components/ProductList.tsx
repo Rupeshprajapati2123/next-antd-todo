@@ -7,7 +7,6 @@ import { Table, Dropdown, Menu, Input as AntInput, Checkbox, Tooltip, Modal, For
 import { EditOutlined, DeleteFilled } from '@ant-design/icons';
 
 const { Search } = AntInput;
-const { Option } = Select;
 
 const ProductList = () => {
   const { list } = useSelector((state: RootState) => state.ProductReducer);
@@ -68,10 +67,8 @@ const ProductList = () => {
   };
 
   const handleEditProductSubmit = () => {
-    if (editProductModal.ProductId !== undefined) {
-      // Dispatch the editProduct action with the updated name and type
+    if (editProductModal.ProductId !== undefined) {    
       dispatch(editProduct({ id: editProductModal.ProductId, name: editedProduct.name, type: editedProduct.type }));
-      // Close the modal
       handleEditModalClose();
     }
   };
@@ -145,7 +142,6 @@ const ProductList = () => {
 
       <Table dataSource={sortedList} columns={columns} />
 
-      {/* Edit Product Modal */}
       <Modal
         title="Edit Product"
         visible={editProductModal.visible}

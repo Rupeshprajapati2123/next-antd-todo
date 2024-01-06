@@ -20,7 +20,7 @@ const AddProductForm: React.FC = () => {
 
   type FieldType = {
     task?: string;
-    type?: string; // Add the type field
+    type?: string; 
   };
 
   return (
