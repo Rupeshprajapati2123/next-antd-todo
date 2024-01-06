@@ -1,39 +1,26 @@
 'use client';
 import React from 'react';
-import { removeTodo, toggleTodo, editTodo } from '@/redux/features/todo-slice';
+import { removeProduct, toggleProduct, editProduct } from '@/redux/features/product-slice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Typography, Checkbox, Tooltip, Modal, Form, Input } from 'antd';
-// import { DeleteFilled, EditOutlined } from '@ant-design/icons';
-
-
-
-// ... (your existing imports)
-// import { Table, Dropdown, Menu } from 'antd';
-// ... (your existing imports)
-// ... (your existing imports)
-
-// ... (your existing imports);
-
-// ... (your existing imports)
 import { Table, Dropdown, Menu, Input as AntInput, Checkbox, Tooltip, Modal, Form, Select } from 'antd';
 import { EditOutlined, DeleteFilled } from '@ant-design/icons';
 
 const { Search } = AntInput;
 const { Option } = Select;
 
-const TodoList = () => {
-  const { list } = useSelector((state: RootState) => state.todoReducer);
+const ProductList = () => {
+  const { list } = useSelector((state: RootState) => state.ProductReducer);
   const dispatch = useDispatch<AppDispatch>();
 
   const [sortOrder, setSortOrder] = React.useState<'asc' | 'desc'>('asc');
-  const [editTodoModal, setEditTodoModal] = React.useState<{
+  const [editProductModal, setEditProductModal] = React.useState<{
     visible: boolean;
-    todoId?: number;
+    ProductId?: number;
   }>({
     visible: false,
   });
-  const [editedTodo, setEditedTodo] = React.useState<{ name: string; type: string }>({
+  const [editedProduct, setEditedProduct] = React.useState<{ name: string; type: string }>({
     name: '',
     type: '',
   });
@@ -42,9 +29,9 @@ const TodoList = () => {
 
   const sortedList = React.useMemo(() => {
     const filteredList = list.filter(
-      (todo) =>
-        todo.name.toLowerCase().includes(searchValue.toLowerCase()) &&
-        (selectedType === undefined || todo.type === selectedType)
+      (Product) =>
+        Product.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+        (selectedType === undefined || Product.type === selectedType)
     );
 
     const sorted = [...filteredList];
@@ -58,12 +45,9 @@ const TodoList = () => {
     return sorted;
   }, [list, sortOrder, searchValue, selectedType]);
 
-  const handleToggle = (id: number) => {
-    dispatch(toggleTodo(id));
-  };
 
   const handleDelete = (id: number) => {
-    dispatch(removeTodo(id));
+    dispatch(removeProduct(id));
   };
 
   const handleSort = (order: 'asc' | 'desc') => {
@@ -71,22 +55,22 @@ const TodoList = () => {
   };
 
   const handleEditModalOpen = (id: number) => {
-    const todoToEdit = list.find((todo) => todo.id === id);
+    const ProductToEdit = list.find((Product) => Product.id === id);
 
-    if (todoToEdit) {
-      setEditedTodo({ name: todoToEdit.name, type: todoToEdit.type || '' });
-      setEditTodoModal({ visible: true, todoId: id });
+    if (ProductToEdit) {
+      setEditedProduct({ name: ProductToEdit.name, type: ProductToEdit.type || '' });
+      setEditProductModal({ visible: true, ProductId: id });
     }
   };
 
   const handleEditModalClose = () => {
-    setEditTodoModal({ visible: false, todoId: undefined });
+    setEditProductModal({ visible: false, ProductId: undefined });
   };
 
-  const handleEditTodoSubmit = () => {
-    if (editTodoModal.todoId !== undefined) {
-      // Dispatch the editTodo action with the updated name and type
-      dispatch(editTodo({ id: editTodoModal.todoId, name: editedTodo.name, type: editedTodo.type }));
+  const handleEditProductSubmit = () => {
+    if (editProductModal.ProductId !== undefined) {
+      // Dispatch the editProduct action with the updated name and type
+      dispatch(editProduct({ id: editProductModal.ProductId, name: editedProduct.name, type: editedProduct.type }));
       // Close the modal
       handleEditModalClose();
     }
@@ -96,7 +80,7 @@ const TodoList = () => {
     {
       title: (
         <div>
-          Task{' '}
+          Product{' '}
           <Dropdown
             overlay={
               <Menu onClick={({ key }) => handleSort(key as 'asc' | 'desc')}>
@@ -120,7 +104,7 @@ const TodoList = () => {
       dataIndex: 'type',
       key: 'type',
       filters: list
-        .map((todo) => todo.type)
+        .map((Product) => Product.type)
         .filter((value, index, self) => self.indexOf(value) === index)
         .map((type) => ({ text: type, value: type })),
       onFilter: (value: any, record: any) => record.type === value,
@@ -151,7 +135,7 @@ const TodoList = () => {
   return (
     <div>
       <Search
-        placeholder="Search tasks"
+        placeholder="Search Products"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         style={{ marginBottom: '16px' }}
@@ -161,24 +145,24 @@ const TodoList = () => {
 
       <Table dataSource={sortedList} columns={columns} />
 
-      {/* Edit Todo Modal */}
+      {/* Edit Product Modal */}
       <Modal
-        title="Edit Todo"
-        visible={editTodoModal.visible}
-        onOk={handleEditTodoSubmit}
+        title="Edit Product"
+        visible={editProductModal.visible}
+        onOk={handleEditProductSubmit}
         onCancel={handleEditModalClose}
       >
         <Form>
-          <Form.Item label="Task">
+          <Form.Item label="Product Name">
             <AntInput
-              value={editedTodo.name}
-              onChange={(e) => setEditedTodo({ ...editedTodo, name: e.target.value })}
+              value={editedProduct.name}
+              onChange={(e) => setEditedProduct({ ...editedProduct, name: e.target.value })}
             />
           </Form.Item>
-          <Form.Item label="Type">
+          <Form.Item label="Product Type">
             <AntInput
-              value={editedTodo.type}
-              onChange={(e) => setEditedTodo({ ...editedTodo, type: e.target.value })}
+              value={editedProduct.type}
+              onChange={(e) => setEditedProduct({ ...editedProduct, type: e.target.value })}
             />
           </Form.Item>
         </Form>
@@ -187,4 +171,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default ProductList;

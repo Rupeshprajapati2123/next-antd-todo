@@ -11,11 +11,11 @@ const Navbar: React.FC = () => {
       <div className="container-fluid d-flex justify-content-between">
         <div className='my-auto'>
           <Image
-            src="/assets/logo.webp"
+            src="/assets/logo.png"
             alt="logo"
-            width={100}
-            height={100}
-            style={{ width: '100px', height: 'auto' }}
+            width={500}
+            height={500}
+            style={{ width: '50px', height: 'auto' }}
           />
         </div>
 

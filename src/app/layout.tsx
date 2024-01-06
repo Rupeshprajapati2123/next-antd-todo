@@ -12,7 +12,7 @@ import ReduxProvider from '@/redux/provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ToDo App',
+  title: 'Product App',
   description: 'Created Using Next.js 14 and Ant Design',
 };
 

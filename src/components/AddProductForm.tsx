@@ -1,17 +1,16 @@
 'use client';
 import React from 'react';
 import { Button, Form, Input } from 'antd';
-import { addTodo } from '@/redux/features/todo-slice';
+import { addProduct } from '@/redux/features/product-slice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 
-
-const AddTodoForm: React.FC = () => {
+const AddProductForm: React.FC = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch<AppDispatch>();
 
   const onFinish = (values: any) => {
-    dispatch(addTodo({ id: Date.now(), name: values.task, type: values.type, done: false }));
+    dispatch(addProduct({ id: Date.now(), name: values.task, type: values.type, done: false }));
     form.resetFields();
   };
 
@@ -27,23 +26,23 @@ const AddTodoForm: React.FC = () => {
   return (
     <Form
       form={form}
-      name="add-todo-form"
+      name="add-Product-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item<FieldType>
         name="task"
-        rules={[{ required: true, message: 'Please input your task!' }]}
+        rules={[{ required: true, message: 'Enter Name of Product' }]}
       >
-        <Input placeholder="Enter your task" />
+        <Input placeholder="Enter Name of Product" />
       </Form.Item>
 
       <Form.Item<FieldType>
         name="type"
-        rules={[{ required: true, message: 'Please input the task type!' }]}
+        rules={[{ required: true, message: 'Enter Type of Product' }]}
       >
-        <Input placeholder="Enter the task type" />
+        <Input placeholder="Enter Type of Product" />
       </Form.Item>
 
       <Form.Item className="text-center">
@@ -55,4 +54,4 @@ const AddTodoForm: React.FC = () => {
   );
 };
 
-export default AddTodoForm;
+export default AddProductForm;
